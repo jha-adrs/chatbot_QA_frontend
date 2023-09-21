@@ -1,41 +1,58 @@
 import React, { useState } from 'react';
 import config from '../config/config'
 async function loginUser(credentials) {
-  return fetch(`${config.SERVER_URL}/login`, {
+  await fetch(`${config.SERVER_URL}/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(credentials)
   })
-    .then(data => data.json())
+    .then(async data =>{ return await data.json()})
 }
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const navigate = useNavigate();
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showAlert, setShowAlert] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const handleSubmit = async(e) => {
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [alertColor, setAlertColor] = useState('')
+    const [alertInstructions, setAlertInstructions] = useState('')
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setShowAlert(false);
-        setIsLoading(true);''
-        setTimeout(() => {
-            if(password !== confirmPassword){
-                setShowAlert(true)
-                setIsLoading(false)
-                return
-            }
+        setIsSubmitDisabled(true)
+        if(!email || !password){
+            setShowAlert(true)
+            setAlertMessage("Please fill all the fields!")
+            setAlertColor("red")
+            setAlertInstructions("Make sure you have filled all the fields")
             setIsLoading(false)
-        }, 5000);
-     const token = await loginUser({
-      username,
-      password
-    });
-    localStorage.setItem('token', token); // Store the token   
+            return
+        }
         
+        setIsLoading(true);
+        const token = await loginUser({email, password});
+        if(token){
+            localStorage.setItem('accessToken', token.token); // Store the token
+            setShowAlert(true)
+            setAlertMessage("Account created successfully!")
+            setAlertColor("green")
+            setAlertInstructions("Your account will be activated by admin soon")
+            navigate('/dashboard');
+        }
+        else{
+            setShowAlert(true)
+            setAlertMessage("Error!")
+            setAlertColor("red")
+            setAlertInstructions("Please check your credentials")
+        }
+        setIsLoading(false)
+        setIsSubmitDisabled(false)
     }
-
     
   return (
     <div>

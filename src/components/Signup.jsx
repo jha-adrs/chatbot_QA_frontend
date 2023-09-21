@@ -1,43 +1,85 @@
 import config from '../config/config'
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Spinner from './Spinner'
+import Alert from './Alert'
+async function signupUser(credentials) {
+    return fetch(config.SERVER_URL+'/users/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
+    })
+    .then(data => data.json())
+    .then(data => {
+        if(data.success){
+            console.log(data)
+            return data
+        }
+        else{
+            console.log("Error: ", data)
+            return false
+        }
+    })
+    .catch(err => console.log(err))
+}
+
 const Signup = () => {
     // On Sumbit create new user or display of user already exists
+    const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [showAlert, setShowAlert] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const handleSubmit = (e) => {
+    const [isSubmitDisabled, setIsSubmitDisabled] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [alertColor, setAlertColor] = useState('')
+    const [alertInstructions, setAlertInstructions] = useState('')
+    const handleSubmit = async (e) => {
         e.preventDefault()
         setShowAlert(false);
-        setIsLoading(true);''
-        setTimeout(() => {
-            if(password !== confirmPassword){
-                setShowAlert(true)
-                setIsLoading(false)
-                return
-            }
+        setIsSubmitDisabled(true)
+        if(!email || !password || !confirmPassword){
+            setShowAlert(true)
+            setAlertMessage("Please fill all the fields!")
+            setAlertColor("red")
+            setAlertInstructions("Make sure you have filled all the fields")
             setIsLoading(false)
-        }, 5000);
-        
-        
+            return
+        }
+        if(password !== confirmPassword){
+            setShowAlert(true)
+            setAlertMessage("Passwords do not match")
+            setAlertColor("red")
+            setAlertInstructions("Please check your password")
+            setIsLoading(false)
+            return
+        }
+        setIsLoading(true);
+        const token = await signupUser({email, password});
+        if(token){
+            localStorage.setItem('accessToken', token.token); // Store the token
+            setShowAlert(true)
+            setAlertMessage("Account created successfully!")
+            setAlertColor("green")
+            setAlertInstructions("Your account will be activated by admin soon")
+            navigate('/dashboard');
+        }
+        else{
+            setShowAlert(true)
+        }
+        setIsLoading(false)
+        setIsSubmitDisabled(false)
     }
     return (
         <section className="bg-transparent dark:bg-transparent rounded-lg">
             {showAlert &&(
-                <div className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span className="sr-only">Info</span>
-                <div>
-                  <span className="font-medium">User already Exists!</span> Head over to the Login Page
-                </div>
-              </div>
+                <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
             )}
-            {isLoading ? (<Spinner/>):(
+            {isLoading ? (<Spinner />):(
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
@@ -69,7 +111,10 @@ const Signup = () => {
                                     <label for="terms" className="font-light text-gray-500 dark:text-gray-300">I know my account will be on hold until it gets activated by admin </label>
                                 </div>
                             </div>
-                            <button onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                            <button onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            disabled={isSubmitDisabled}
+                            >
+                                Create an account</button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                             </p>
