@@ -59,14 +59,15 @@ const Signup = () => {
             return
         }
         setIsLoading(true);
-        const token = await signupUser({email, password});
-        if(token){
-            localStorage.setItem('accessToken', token.token); // Store the token
+        const response = await signupUser({email, password});
+        if(response.success){
+            localStorage.setItem('accessToken', response.token); // Store the token
+            localStorage.setItem('user_id', response.user_id || 0); // Store the user_id
             setShowAlert(true)
             setAlertMessage("Account created successfully!")
             setAlertColor("green")
             setAlertInstructions("Your account will be activated by admin soon")
-            navigate('/dashboard');
+            return navigate('/dashboard');
         }
         else{
             setShowAlert(true)
@@ -116,7 +117,7 @@ const Signup = () => {
                             >
                                 Create an account</button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Already have an account? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                                Already have an account? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                             </p>
                         </form>
                     </div>

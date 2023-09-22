@@ -1,4 +1,4 @@
 const config={
-    "SERVER_URL":"http://localhost:5000"
+    "SERVER_URL":"https://chatbot-qa-backend.vercel.app"
 }
 export default config;
