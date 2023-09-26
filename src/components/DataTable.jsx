@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import config from '../config/config'
 import Alert from './Alert'
+import Spinner from './Spinner'
 const DataTable = (props) => {
     const [questions, setQuestions] = useState(props.questions || [])
     const [answers, setAnswers] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(false)
-
+    const category = props.category || 'try'
     const handleSubmit = async (e) => {
         const accessToken = localStorage.getItem('accessToken')
         const user_id = localStorage.getItem('user_id')
@@ -19,14 +20,16 @@ const DataTable = (props) => {
             answer_text: answers[question_id],
             user_id
         }))
-
-        const response = axios.post(`${config.SERVER_URL}/api/insert/try`, {
-            headers:{
-                'Content-Type': 'application/json',
+        console.log(accessToken, answerArray)
+        const response = await axios.post(
+            `${config.SERVER_URL}/api/insertmultiple/${category}`,
+            answerArray, // Send the data as the request body
+            {
+              headers: {
                 'Authorization': `Bearer ${accessToken}`
-            },
-            body: answerArray
-        })
+              }
+            }
+          )
         if(response.success){
             console.log("Success")
 
@@ -34,6 +37,8 @@ const DataTable = (props) => {
 
         setIsLoading(false)
         setIsSubmitDisabled(false)
+        window.location.reload();
+
     }
 
     return (
@@ -82,7 +87,9 @@ const DataTable = (props) => {
                         ))}
                         <tr>
                             <td colspan="5" class="px-6 py-4 text-right">
-                                <button type="submit" onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" disabled={isSubmitDisabled}>Submit All</button>
+                                <button type="submit" onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" disabled={isSubmitDisabled}>
+                                    {isLoading?(<Spinner/>):"Submit All"}
+                                    </button>
                             </td>
                         </tr>
                     </tbody>

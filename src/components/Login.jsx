@@ -31,7 +31,7 @@ export default function Login() {
     e.preventDefault()
     setShowAlert(false);
     setIsSubmitDisabled(true)
-    if(!email || !password){
+    if (!email || !password) {
       setShowAlert(true)
       setAlertMessage("Please fill all the fields!")
       setAlertColor("red")
@@ -40,36 +40,40 @@ export default function Login() {
       return
     }
     setIsLoading(true);
-    const response = await loginUser({email, password});
+    const response = await loginUser({ email, password });
     console.log(response)
-    if(response.success){
+    if (response.success) {
       localStorage.setItem('accessToken', response.token); // Store the token
       localStorage.setItem('user_id', response.user_id || 0); // Store the user_id
       setIsLoading(false)
-      
+
       return navigate('/dashboard')
     }
-    else{
+    else {
       setShowAlert(true)
       setAlertMessage(response.message || "Error")
       setAlertColor("red")
-      setAlertInstructions(response.instructions ||"Please check your credentials")
+      setAlertInstructions(response.instructions || "Please check your credentials")
     }
     setIsLoading(false)
     setIsSubmitDisabled(false)
   }
 
   return (
-    <section className="bg-transparent dark:bg-transparent rounded-lg">
-      {showAlert &&(
-                <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
-            )}
-      {isLoading ? (<Spinner/>):(
+    <section className="bg-main-dark2 rounded-lg border-2 border-primary-700">
+      {showAlert && (
+        <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
+      )}
+      {isLoading ? (<Spinner />) : (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo"/>
-            Flowbite
-          </a>
+          <div className="w-60 h-14 relative m-4">
+            <div className="left-[62.01px] top-[5.31px] absolute text-white text-4xl font-bold font-['DM Sans'] leading-10">QA Portal</div>
+            <div className="w-12 h-14 left-0 top-0 absolute">
+              <div className="w-8 h-8 left-[24px] top-[-1.86px] absolute origin-top-left rotate-[30deg] bg-indigo-600" />
+              <div className="w-7 h-7 left-[-0.21px] top-[13.55px] absolute origin-top-left rotate-[30deg] bg-sky-400" />
+              <div className="w-7 h-7 left-[24px] top-[27.53px] absolute origin-top-left rotate-[-30deg] bg-purple-600" />
+            </div>
+          </div>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -78,11 +82,11 @@ export default function Login() {
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
                   <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                  <input onChange={(e)=>{setEmail(e.target.value)}} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required=""/>
+                  <input onChange={(e) => { setEmail(e.target.value) }} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
                 </div>
                 <div>
                   <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                  <input onChange={(e)=>{setPassword(e.target.value)}} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
+                  <input onChange={(e) => { setPassword(e.target.value) }} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                 </div>
                 <div className="flex items-center justify-between">
                   <a href="/forgotpassword" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>

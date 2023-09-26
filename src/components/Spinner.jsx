@@ -2,7 +2,7 @@ import React from 'react'
 
 const Spinner = () => {
     return (
-        <div class="flex items-center justify-center w-full h-full">
+        <div class="flex items-center justify-center w-full h-full m-3">
         <div class="flex justify-center items-center space-x-1 text- text-white">
 
             <svg fill='none' class="w-6 h-6 animate-spin" viewBox="0 0 32 32" xmlns='http://www.w3.org/2000/svg'>
