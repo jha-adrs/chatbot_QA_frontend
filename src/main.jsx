@@ -13,28 +13,27 @@ import Dashboard from './components/Dashboard.jsx';
 import Navbar from './components/Navbar';
 const router = createBrowserRouter([
   {
-    path:'/',
+    path: '/',
     element: <Login />,
     errorElement: <NotFound />,
   },
-      {
-        path:'/login',
-        element: <Login />
-      },
-      {
-        path:'/signup',
-        element: <Signup />
-      },
-      {
-        path:'/dashboard',
-        element: <App/>
+  {
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/signup',
+    element: <Signup />
+  },
+  {
+    path: '/dashboard',
+    element: <App />
 
-      }
+  }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
-    
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
