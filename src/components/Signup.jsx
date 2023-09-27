@@ -81,7 +81,7 @@ const Signup = () => {
                 <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
             )}
             {isLoading ? (<Spinner />) : (
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 border-2 border-primary-500 bg-main-back2">
                     <div className="w-60 h-14 relative m-4">
                         <div className="left-[62.01px] top-[5.31px] absolute text-white text-4xl font-bold font-['DM Sans'] leading-10">QA Portal</div>
                         <div className="w-12 h-14 left-0 top-0 absolute">
