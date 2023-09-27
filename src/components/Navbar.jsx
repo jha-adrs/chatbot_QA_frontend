@@ -1,16 +1,20 @@
 import React, { useState, useContext, useRef } from 'react'
 import { useAppContext } from '../context/context';
+import config from '../config/config';
 const Navbar = () => {
     const {category, updateCategory} = useAppContext();
     const dropdownRef = useRef(null)
     const changeCategory = (value)=>{
         updateCategory(value)
-        console.log("changeCategory called", value, category )
+        console.log("changeCategory called", value, config.CATEGORY_MAP[value], category )
     }
     
     const [showtoggle, setShowtoggle] = useState(false)
     const handleToggle = () => {
         setShowtoggle(!showtoggle)
+    }
+    const capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
     document.addEventListener('click', function (event) {
         const dropdown = dropdownRef.current
@@ -19,6 +23,10 @@ const Navbar = () => {
         }
     })
 
+    const handleSignout = () => {
+        localStorage.clear();
+        window.location.reload();
+    }
 
     return (<>
 
@@ -37,7 +45,10 @@ const Navbar = () => {
                         <svg className='w-5 h-5 mr-2' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                        Question Category
+                        Question Category ({capitalize(category)})
+                    </button>
+                    <button onClick={handleSignout} className='ml-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 dark:hover:text-white border-2 rounded-md border-danger-700 hover:border-white'>
+                        Signout
                     </button>
                     {showtoggle && (
                         <div className=" absolute left-0 top-0 mt-10 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-black" id="language-dropdown-menu">
@@ -45,35 +56,35 @@ const Navbar = () => {
                                 <li>
                                     <div onClick={()=>{changeCategory(1)}} className=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            1. TRY
+                                         {category=='try'?"✅":""}   1. TRY
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={()=>{changeCategory(2)}} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            2. Fee
+                                        {category=='fee'?"✅":""} 2. Fee
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={()=>{changeCategory(3)}} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            3. Academics
+                                        {category=='academics'?"✅":""} 3. Academics
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={()=>{changeCategory(4)}} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            4. Admissions
+                                        {category=='admission'?"✅":""} 4. Admissions
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={()=>{changeCategory(5)}} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            5. Infrastructure
+                                        {category=='infrastructure'?"✅":""} 5. Infrastructure
                                         </div>
                                     </div>
                                 </li>

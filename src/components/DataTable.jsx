@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import config from '../config/config'
@@ -14,47 +14,70 @@ const DataTable = () => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [hasQuestions, setHasQuestions] = useState(true);
   const [error, setError] = useState(null);
+  const dataFetched = useRef(false);
+  const categoryRef = useRef(category);
 
   useEffect(() => {
     document.title = 'Dashboard';
-    setIsLoading(true);
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      console.log('Access token found');
-      axios
-        .get(`${config.SERVER_URL}/api/fetch/${category}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: {
-            limit: 10,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          if (res.data.length === 0) {
-            setHasQuestions(false);
-          }
-          setQuestions(res.data);
-          setIsSubmitDisabled(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response && err.response.status === 401) {
-            console.log('Access token expired');
-            localStorage.clear();
-            navigate('/login');
-          } else {
-            setError('An error occurred while fetching data.');
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      console.log('No access token');
-      navigate('/login');
-      setIsLoading(false);
+
+    // Check if the category has changed
+    if (categoryRef.current !== category) {
+      categoryRef.current = category;
+      dataFetched.current = false;
+      console.log("Changing") // Reset the flag when category changes
+    }
+
+    if (!dataFetched.current) {
+      setIsLoading(true);
+      setError(null);
+      setQuestions([]);
+      setAnswers({});
+      setHasQuestions(true);
+      console.log('Fetching data')
+      const accessToken = localStorage.getItem('accessToken');
+
+      if (accessToken) {
+        console.log('Access token found');
+        axios
+          .get(`${config.SERVER_URL}/api/fetch/${category}`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: {
+              limit: 10,
+            },
+          })
+          .then(({data}) => {
+            const res = {data:data.data}
+            console.log("res", res);
+            if (res.data.length === 0) {
+              setHasQuestions(false);
+              dataFetched.current = true; // Mark data as fetched
+            }
+            setQuestions(res.data);
+            setIsSubmitDisabled(false);
+          })
+          .catch((err) => {
+            console.log(err);
+            if (err.response && err.response.status === 401) {
+              console.log('Access token expired');
+              localStorage.clear();
+              navigate('/login');
+            } else if (err.response && err.response.status === 500) {
+              console.log('Internal server error');
+              setError('An error occurred while submitting data.');
+              dataFetched.current = false; // Reset the flag when an error occurs
+            }
+          })
+          .finally(() => {
+            setIsLoading(false);
+            //dataFetched.current = true; // Mark data as fetched
+          });
+      } else {
+        console.log('No access token');
+        navigate('/login');
+        setIsLoading(false);
+      }
     }
   }, [category]);
 
@@ -107,6 +130,7 @@ const DataTable = () => {
   }
 
   if (error) {
+    dataFetched.current = false; // Reset the flag when error occurs
     return <Alert message={error} color="red" />;
   }
 
