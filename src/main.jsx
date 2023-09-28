@@ -11,6 +11,8 @@ import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import Navbar from './components/Navbar';
+import {inject} from '@vercel/analytics';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -30,7 +32,8 @@ const router = createBrowserRouter([
     element: <App />
 
   }
-])
+]);
+inject();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
