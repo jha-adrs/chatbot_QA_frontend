@@ -13,7 +13,6 @@ import Dashboard from './components/Dashboard.jsx';
 import Navbar from './components/Navbar';
 import {inject} from '@vercel/analytics';
 import About from './components/About';
-import Creators from './components/Creators';
 
 const router = createBrowserRouter([
   {
