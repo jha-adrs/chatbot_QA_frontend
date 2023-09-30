@@ -10,7 +10,6 @@ import NotFound from './components/NotFound.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import Dashboard from './components/Dashboard.jsx';
-import Navbar from './components/Navbar';
 import {inject} from '@vercel/analytics';
 import About from './components/About';
 

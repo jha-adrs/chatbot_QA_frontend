@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import config from '../config/config'
@@ -47,8 +47,8 @@ const DataTable = () => {
               limit: 10,
             },
           })
-          .then(({data}) => {
-            const res = {data:data.data}
+          .then(({ data }) => {
+            const res = { data: data.data }
             console.log("res", res);
             if (res.data.length === 0) {
               setHasQuestions(false);
@@ -173,7 +173,7 @@ const DataTable = () => {
           <tbody>
             {questions.map((question) => (
               (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr key={question.question_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {question.question_id}
                   </th>

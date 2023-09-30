@@ -75,6 +75,7 @@ const Signup = () => {
         setIsLoading(false)
         setIsSubmitDisabled(false)
     }
+    document.title = "Signup | QA Portal"
     return (
         <section className="bg-transparent dark:bg-transparent rounded-lg border-2 border-primary-700">
             {showAlert && (

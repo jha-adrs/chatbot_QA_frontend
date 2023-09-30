@@ -1,6 +1,6 @@
-import React from 'react'
 
 const About = () => {
+    document.title = "About | QA Portal"
     return (
         <div className="p-10 bg-main-back2 rounded-xl shadow-lg relative border-2 ">
             <div className='p-10 hover:bg-primary-800 hover:scale-105 transition duration-300 ease-in-out transform rounded-lg'>

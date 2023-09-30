@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react'
+import  { useState, useRef } from 'react'
 import { useAppContext } from '../context/context';
 import config from '../config/config';
 const Navbar = () => {
