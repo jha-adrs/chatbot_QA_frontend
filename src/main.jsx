@@ -12,6 +12,8 @@ import Signup from './components/Signup.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import Navbar from './components/Navbar';
 import {inject} from '@vercel/analytics';
+import About from './components/About';
+import Creators from './components/Creators';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +33,21 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <App />
 
-  }
+  },
+  {
+    path: '/about',
+    element: <About />
+  },
+  {
+    path: '/answered',
+    element: <Dashboard />
+  },
+  {
+    path: '/useranswered',
+    element: <Dashboard />
+  },
+  
+  
 ]);
 inject();
 
