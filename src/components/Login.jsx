@@ -44,7 +44,7 @@ export default function Login() {
     console.log(response)
     if (response.success) {
       localStorage.setItem('accessToken', response.token); // Store the token
-      localStorage.setItem('user_id', response.user_id || 0); // Store the user_id
+      localStorage.setItem('user_id', response.user_id ); // Store the user_id
       setIsLoading(false)
 
       return navigate('/dashboard')

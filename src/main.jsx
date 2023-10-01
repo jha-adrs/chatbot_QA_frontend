@@ -12,7 +12,8 @@ import Signup from './components/Signup.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import {inject} from '@vercel/analytics';
 import About from './components/About';
-
+import Navbar from './components/Navbar';
+import { AppContextProvider } from './context/context';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -34,15 +35,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/about',
-    element: <About />
+    element: <><Navbar/><About /></>
   },
   {
     path: '/answered',
-    element: <Dashboard />
+    element: <><Navbar/><Dashboard /></>
   },
   {
     path: '/useranswered',
-    element: <Dashboard />
+    element: <><Navbar/><Dashboard /></>
   },
   
   
@@ -51,6 +52,9 @@ inject();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <AppContextProvider>
     <RouterProvider router={router} />
+    </AppContextProvider>
+    
   </React.StrictMode>,
 )
