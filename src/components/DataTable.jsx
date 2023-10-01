@@ -81,7 +81,7 @@ const DataTable = () => {
     }
   }, [category]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const accessToken = localStorage.getItem('accessToken');
     const user_id = localStorage.getItem('user_id');
     setIsLoading(true);
