@@ -9,7 +9,7 @@ const About = () => {
                     This platform is a question answering system designed to collect data for training a chatbot application.
                 </p>
                 <p className="text-center">
-                    The chatbot is specifically tailored for VIT Vellore, the questions are designed to be relevant to the university and its students.
+                    The chatbot is specifically tailored for VIT Vellore, the questions are designed to be relevant to the university and its students and has <b>no affiliation with the university itself</b>.
                 </p>
             </div>
             <hr className="my-6 border-t-2 border-gray-300" />

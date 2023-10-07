@@ -67,7 +67,7 @@ const Answered = () => {
 
     useEffect(() => {
         document.title = 'Answered Questions';
-        
+        setState(prevState => ({ ...prevState, isLoading: true, error: null }));
         if (categoryRef.current !== category) {
             categoryRef.current = category;
             dataFetched.current = false;
@@ -93,14 +93,14 @@ const Answered = () => {
         console.log("newPage",direction, newPage, page);
     };
 
-
+    if (error) {
+        return <Alert message={error} color="red" />;
+    }
     if (isLoading && !error) {
         return <Spinner />;
     }
 
-    if (error) {
-        return <Alert message={error} color="red" />;
-    }
+    
 
 
     return (
