@@ -16,3 +16,9 @@ In the long run, we're working towards training an AI-powered Chatbot using this
 
 ### Let's Get Started! :rocket:
 [Currently Deployed Here](https://thesecurehash.vercel.app/)
+
+Current Preview ->
+
+![image](https://github.com/jha-adrs/chatbot_QA_frontend/assets/88365910/afb46e31-f8b6-487d-bac2-b846cd2a3a77)
+
+![image](https://github.com/jha-adrs/chatbot_QA_frontend/assets/88365910/7d7f3591-9697-446d-b2e2-a940150d542a)
