@@ -9,11 +9,12 @@ import {
 import NotFound from './components/NotFound.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
-import Dashboard from './components/Dashboard.jsx';
 import {inject} from '@vercel/analytics';
 import About from './components/About';
 import Navbar from './components/Navbar';
 import { AppContextProvider } from './context/context';
+import Answered from './components/questions/Answered';
+import UserAnswered from './components/questions/UserAnswered';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -39,11 +40,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/answered',
-    element: <><Navbar/><Dashboard /></>
+    element: <><Navbar/><Answered /></>
   },
   {
     path: '/useranswered',
-    element: <><Navbar/><Dashboard /></>
+    element: <><Navbar/><UserAnswered /></>
   },
   
   

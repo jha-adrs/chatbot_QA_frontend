@@ -39,13 +39,14 @@ const DataTable = () => {
       if (accessToken) {
         console.log('Access token found');
         axios
-          .get(`${config.SERVER_URL}/api/fetch/${category}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: {
+          .post(`${config.SERVER_URL}/api/fetch/${category}`, {
               limit: 10,
-            },
+              user_id: localStorage.getItem('user_id'),
+          },{
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            }
           })
           .then(({ data }) => {
             const res = { data: data.data }
@@ -101,6 +102,7 @@ const DataTable = () => {
         answerArray, // Send the data as the request body
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
           },
         }
