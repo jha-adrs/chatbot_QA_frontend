@@ -37,6 +37,7 @@ export default function Login() {
       setAlertColor("red")
       setAlertInstructions("Make sure you have filled all the fields")
       setIsLoading(false)
+      setIsSubmitDisabled(false)
       return
     }
     setIsLoading(true);

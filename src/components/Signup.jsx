@@ -19,7 +19,7 @@ async function signupUser(credentials) {
             }
             else {
                 console.log("Error: ", data)
-                return false
+                return data
             }
         })
         .catch(err => console.log(err))
@@ -40,7 +40,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setShowAlert(false);
-        setIsSubmitDisabled(true)
+        setIsLoading(true);
         if (!email || !password || !confirmPassword) {
             setShowAlert(true)
             setAlertMessage("Please fill all the fields!")
@@ -66,15 +66,23 @@ const Signup = () => {
             setAlertMessage("Account created successfully!")
             setAlertColor("green")
             setAlertInstructions("Your account will be activated by admin soon")
-            return navigate('/dashboard');
+            setTimeout(() => {
+                navigate('/login')
+            }
+                , 5000);
         }
         else {
             setShowAlert(true)
+            setAlertMessage(response.message)
+            setAlertColor("red")
+            setAlertInstructions(response.instructions)
         }
         setIsLoading(false)
         setIsSubmitDisabled(false)
     }
     document.title = "Signup | QA Portal"
+
+
     return (
         <section className="bg-transparent dark:bg-transparent rounded-lg border-2 border-primary-700">
             {showAlert && (

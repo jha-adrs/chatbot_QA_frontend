@@ -30,6 +30,16 @@ const Navbar = () => {
         localStorage.clear();
         navigate('/')
     }
+    const handleMenuToggle = () => {
+        const navbarLanguage = document.getElementById('navbar-language')
+        if (navbarLanguage.classList.contains('hidden')) {
+            navbarLanguage.classList.remove('hidden')
+            navbarLanguage.classList.add('block')
+        } else {
+            navbarLanguage.classList.remove('block')
+            navbarLanguage.classList.add('hidden')
+        }
+    }
     // TODO: Add toggle dropdown in smaller screens
     return (<>
 
@@ -50,7 +60,7 @@ const Navbar = () => {
                         </svg>
                         Question Category ({capitalize(category)})
                     </button>
-                    <button onClick={handleSignout} className='ml-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 dark:hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
+                    <button onClick={handleSignout} className='ml-8 mr-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 dark:hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
                         Signout
                     </button>
                     {showtoggle && (
@@ -96,7 +106,7 @@ const Navbar = () => {
                         </div>
                     )}
 
-                    <button data-collapse-toggle="navbar-language" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-language" aria-expanded="false">
+                    <button onClick={handleMenuToggle} data-collapse-toggle="navbar-language" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-language" aria-expanded="false">
                         <span className="sr-only">Open main menu</span>
                         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
