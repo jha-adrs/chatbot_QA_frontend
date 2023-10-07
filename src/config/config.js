@@ -1,7 +1,9 @@
-const config={
-    "SERVER_URL":"https://chatbot-qa-backend.purplepebble-adb93c94.eastus.azurecontainerapps.io"
- }
-
+// const config={
+//     "SERVER_URL":"https://chatbot-qa-backend.purplepebble-adb93c94.eastus.azurecontainerapps.io"
+//  }
+const config = {
+    SERVER_URL: "https://chatbot-qa-backend.vercel.app"
+}
 
 config.CATEGORY_MAP = {
     1:"try",
