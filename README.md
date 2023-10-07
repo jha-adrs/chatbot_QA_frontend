@@ -15,4 +15,4 @@ In the long run, we're working towards training an AI-powered Chatbot using this
 3. MySQL - For the secure and reliable database :file_folder:
 
 ### Let's Get Started! :rocket:
-[Currently deployed here] (thesecurehash.vercel.app)
+[Currently Deployed Here](https://www.thesecurehash.vercel.app)
