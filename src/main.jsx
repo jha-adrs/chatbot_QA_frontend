@@ -15,6 +15,7 @@ import Navbar from './components/Navbar';
 import { AppContextProvider } from './context/context';
 import Answered from './components/questions/Answered';
 import UserAnswered from './components/questions/UserAnswered';
+import OTPVerification from './components/OTPVerification';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
     path: '/useranswered',
     element: <><Navbar/><UserAnswered /></>
   },
+  {
+    path: '/verifyemail',
+    element: <><OTPVerification /></>
+  }
   
   
 ]);

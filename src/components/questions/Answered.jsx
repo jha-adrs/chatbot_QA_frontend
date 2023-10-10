@@ -106,8 +106,8 @@ const Answered = () => {
     return (
         <div className='flex border-2 rounded-lg mt-11 '>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    {hasQuestions ? (<><thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left text-gray-500 ">
+                    {hasQuestions ? (<><thead className="text-xs text-gray-400 uppercase  bg-gray-700 ">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 QuestionID
@@ -129,8 +129,8 @@ const Answered = () => {
                         <tbody>
                             {questions.map((question) => (
                                 (
-                                    <tr key={question.question_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <tr key={question.question_id} className=" border-2 bg-gray-700/30 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-black">
+                                        <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                                             {question.question_id}
                                         </th>
                                         <td className="px-6 py-4  text-lg">
@@ -145,7 +145,7 @@ const Answered = () => {
                                         <td className="px-6 py-4 text-right text-sm font-medium">
                                             <button
                                                 type="button"
-                                                className="text-white hover:text-primary-500 bg-primary-600 hover:bg-primary-700 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                                                className="text-white hover:text-primary-500 bg-primary-700 hover:bg-primary-700 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                                             >
                                                 Edit
                                             </button>

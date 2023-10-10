@@ -3,6 +3,28 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Spinner from './Spinner'
 import Alert from './Alert'
+
+async function generateOTP(email) {
+    return fetch(config.SERVER_URL + '/users/generateOTP', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+    })
+        .then(data => data.json())
+        .then(data => {
+            if (data.success) {
+                console.log(data)
+                return data
+            }
+            else {
+                console.log("Error: ", data)
+                return data
+            }
+        })
+        .catch(err => console.log(err))
+}
 async function signupUser(credentials) {
     return fetch(config.SERVER_URL + '/users/register', {
         method: 'POST',
@@ -39,6 +61,7 @@ const Signup = () => {
     const [alertInstructions, setAlertInstructions] = useState('')
     const handleSubmit = async (e) => {
         e.preventDefault()
+        localStorage.clear()
         setShowAlert(false);
         setIsLoading(true);
         if (!email || !password || !confirmPassword) {
@@ -60,16 +83,23 @@ const Signup = () => {
         setIsLoading(true);
         const response = await signupUser({ email, password });
         if (response.success) {
-            localStorage.setItem('accessToken', response.token); // Store the token
-            localStorage.setItem('user_id', response.user_id || 0); // Store the user_id
-            setShowAlert(true)
-            setAlertMessage("Account created successfully!")
-            setAlertColor("green")
-            setAlertInstructions("Your account will be activated by admin soon")
-            setTimeout(() => {
-                navigate('/login')
+            const otp_res = await generateOTP(email)
+            if(!otp_res.success){
+                setShowAlert(true)
+                setAlertMessage(otp_res.message)
+                setAlertColor("red")
+                setAlertInstructions(otp_res.instructions)
+                setIsLoading(false)
+                return
             }
-                , 5000);
+            setShowAlert(true)
+            setAlertMessage(otp_res.message)
+            setAlertColor("green")
+            setAlertInstructions(otp_res.instructions)
+            localStorage.setItem('email', email); // Store the user_id
+            setTimeout(() => {
+                navigate('/verifyemail')
+            }, 3000);
         }
         else {
             setShowAlert(true)
@@ -89,7 +119,7 @@ const Signup = () => {
                 <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
             )}
             {isLoading ? (<Spinner />) : (
-                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 border-2 border-primary-500 bg-main-back2">
+                <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 border-2 border-primary-500 bg-black">
                     <div className="w-60 h-14 relative m-4">
                         <div className="left-[62.01px] top-[5.31px] absolute text-white text-4xl font-bold font-['DM Sans'] leading-10">QA Portal</div>
                         <div className="w-12 h-14 left-0 top-0 absolute">
@@ -105,25 +135,18 @@ const Signup = () => {
                             </h1>
                             <form className="space-y-4 md:space-y-6" action="#">
                                 <div>
-                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your login</label>
-                                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="xyz@......" required="" />
+                                    <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 text-white">Your login email</label>
+                                    <input type="email" onChange={(e) => { setEmail(e.target.value) }} name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-transparent border-gray-600 placeholder-gray-400 text-white" placeholder="xyz@me.com" required="" />
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                                    <input type="password" onChange={(e) => { setPassword(e.target.value) }} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 text-white bg-transparent" required="" />
                                 </div>
                                 <div>
                                     <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                                    <input type="confirm-password" onChange={(e) => { setConfirmPassword(e.target.value) }} name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                                    <input type="confirm-password" onChange={(e) => { setConfirmPassword(e.target.value) }} name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white bg-transparent" required="" />
                                 </div>
-                                <div className="flex items-start">
-                                    <div className="flex items-center h-5">
-                                        <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="" />
-                                    </div>
-                                    <div className="ml-3 text-sm">
-                                        <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I know my account will be on hold until it gets activated by admin </label>
-                                    </div>
-                                </div>
+                                
                                 <button onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                                     disabled={isSubmitDisabled}
                                 >

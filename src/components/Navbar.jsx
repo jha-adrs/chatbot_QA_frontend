@@ -40,10 +40,9 @@ const Navbar = () => {
             navbarLanguage.classList.add('hidden')
         }
     }
-    // TODO: Add toggle dropdown in smaller screens
     return (<>
 
-        <nav className="fixed top-0 left-0 right-0 bg-white border-white dark:bg-gray-900 z-20 h-18">
+        <nav className="fixed top-0 left-0 right-0  border-white bg-gray-900 z-20 h-18">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <div className="w-20 h-10 relative">
 

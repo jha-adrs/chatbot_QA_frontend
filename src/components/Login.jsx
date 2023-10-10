@@ -14,7 +14,27 @@ async function loginUser(credentials) {
   const data = await response.json();
   return data;
 }
-
+async function generateOTP(user_id,email) {
+  return fetch(config.SERVER_URL + '/users/generateOTP', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({user_id, email })
+  })
+      .then(data => data.json())
+      .then(data => {
+          if (data.success) {
+              console.log(data)
+              return data
+          }
+          else {
+              console.log("Error: ", data)
+              return data
+          }
+      })
+      .catch(err => console.log(err))
+}
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('')
@@ -29,6 +49,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    localStorage.clear()
     setShowAlert(false);
     setIsSubmitDisabled(true)
     if (!email || !password) {
@@ -51,10 +72,36 @@ export default function Login() {
       return navigate('/dashboard')
     }
     else {
+      if (response.message == "User not activated yet!") {
+        const otp_res =await generateOTP(response.user_id,email)
+        console.log(otp_res)
+        if(!otp_res.success){
+          setShowAlert(true)
+          setAlertMessage(otp_res.message)
+          setAlertColor("red")
+          setAlertInstructions(otp_res.instructions||"Please try after sometime")
+          setIsLoading(false)
+          setIsSubmitDisabled(false)
+          return
+        }
+        localStorage.setItem('email', email); // Store the user_id
+        setTimeout(() => {
+          navigate('/verifyemail')
+        },3000)
+       
+      }
+      else if (response.message == "User not found!") {
+        setShowAlert(true)
+        setAlertMessage(response.message)
+        setAlertColor("red")
+        setAlertInstructions("Please check your credentials")
+        setIsLoading(false) 
+      }
       setShowAlert(true)
       setAlertMessage(response.message || "Error")
       setAlertColor("red")
       setAlertInstructions(response.instructions || "Please check your credentials")
+      
     }
     setIsLoading(false)
     setIsSubmitDisabled(false)
@@ -67,7 +114,7 @@ export default function Login() {
         <Alert message={alertMessage} color={alertColor} instructions={alertInstructions} />
       )}
       {isLoading ? (<Spinner />) : (
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 border-2 border-primary-500 bg-main-back2">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 border-2 border-primary-500 bg-black">
           <div className="w-60 h-14 relative m-4 ">
             <div className="left-[62.01px] top-[5.31px] absolute text-white text-4xl font-bold font-['DM Sans'] leading-10">QA Portal</div>
             <div className="w-12 h-14 left-0 top-0 absolute">
@@ -76,19 +123,19 @@ export default function Login() {
               <div className="w-7 h-7 left-[24px] top-[27.53px] absolute origin-top-left rotate-[-30deg] bg-purple-600" />
             </div>
           </div>
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-black border-primary-800">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
-                  <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                  <input onChange={(e) => { setEmail(e.target.value) }} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="" />
+                  <label htmlFor="email" className="block mb-2 text-sm font-medium  text-white ">Your email</label>
+                  <input onChange={(e) => { setEmail(e.target.value) }} type="email" name="email" id="email" className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 bg-transparent" placeholder="name@company.com" required="" />
                 </div>
                 <div>
                   <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                  <input onChange={(e) => { setPassword(e.target.value) }} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                  <input onChange={(e) => { setPassword(e.target.value) }} type="password" name="password" id="password" placeholder="••••••••" className="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:border-gray-600 placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 bg-transparent" required="" />
                 </div>
                 <div className="flex items-center justify-between">
                   <a href="/forgotpassword" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>

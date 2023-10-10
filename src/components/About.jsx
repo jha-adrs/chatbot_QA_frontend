@@ -2,8 +2,8 @@
 const About = () => {
     document.title = "About | QA Portal"
     return (
-        <div className="p-10 bg-main-back2 rounded-xl shadow-lg relative mt-10 bg-gradient-to-r from-purple-800 to-blue-800 p-4">
-            <div className='p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all rounded'>
+        <div className="p-10 bg-gray-700/30 rounded-xl shadow-lg relative mt-10 bg-gradient-to-r  p-4">
+            <div className='p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-white bg-gray-500/30  ease-out hover:translate-y-1 transition-all rounded'>
                 <h1 className="text-4xl mb-4 text-center font-semibold">About University Chatbot</h1>
                 <p className="mb-2 text-center">
                     This platform is a question answering system designed to collect data for training a chatbot application.
@@ -14,7 +14,7 @@ const About = () => {
             </div>
             <hr className="my-6 border-t-2 border-gray-300" />
 
-            <div className="p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all rounded">
+            <div className="p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-white bg-gray-500/30 ease-out hover:translate-y-1 transition-all rounded">
                 <h2 className="text-3xl mb-4 font-semibold">Purpose</h2>
                 <p className="mb-2">
                     The primary purpose of this platform is to facilitate the collection of data for training a chatbot application. This data is collected through a question-answering system that allows users to interact with the chatbot, asking it questions and providing it with data through their responses.
@@ -22,7 +22,7 @@ const About = () => {
             </div>
             <hr className="my-6 border-t-2 border-gray-300" />
 
-            <div className="p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all rounded">
+            <div className="p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-white bg-gray-500/30  ease-out hover:translate-y-1 transition-all rounded">
                 <h2 className="text-3xl mb-4 font-semibold">Technologies</h2>
                 <p className="mb-2">
                     This platform is built using React, a popular JavaScript library for building user interfaces, and Tailwind CSS, a utility-first CSS framework for rapidly building custom designs. For the backend, we use a cloud-based NodeJS container which further connects to a MySQL database for storing crucial info.

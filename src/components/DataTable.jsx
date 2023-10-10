@@ -90,8 +90,7 @@ const DataTable = () => {
 
     const answerArray = Object.keys(answers).map((question_id) => ({
       question_id,
-      answer_text: answers[question_id],
-      user_id,
+      answer_text: answers[question_id]
     }));
 
     console.log(accessToken, answerArray);
@@ -99,7 +98,11 @@ const DataTable = () => {
     await axios
       .post(
         `${config.SERVER_URL}/api/insertmultiple/${category}`,
-        answerArray, // Send the data as the request body
+        {
+          user_id: user_id,
+          data:answerArray,
+         
+        }, // Send the data as the request body
         {
           headers: {
             'Content-Type': 'application/json',
@@ -152,7 +155,7 @@ const DataTable = () => {
   return (
     <div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left  text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -175,8 +178,8 @@ const DataTable = () => {
           <tbody>
             {questions.map((question) => (
               (
-                <tr key={question.question_id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr key={question.question_id} className=" border-2 bg-gray-700/30 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-black">
+                  <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                     {question.question_id}
                   </th>
                   <td className="px-6 py-4  text-lg">
@@ -186,7 +189,8 @@ const DataTable = () => {
                     {question.tag}
                   </td>
                   <td className="px-6 py-4">
-                    <input onChange={(e) => { setAnswers({ ...answers, [question.question_id]: e.target.value }) }} name="answer" placeholder="Answer" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                    <input onChange={(e) => { setAnswers({ ...answers, [question.question_id]: e.target.value }) }} name="answer" placeholder="Answer" 
+                    className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700/30 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required="" />
                   </td>
                   <td className="px-6 py-4 text-right">
                   </td>
