@@ -108,7 +108,7 @@ const UserAnswered = () => {
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     {hasQuestions ? (<>
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead className="text-xs  uppercase bg-gray-700 text-gray-300">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 QuestionID
@@ -130,8 +130,8 @@ const UserAnswered = () => {
                         <tbody>
                             {questions.map((question) => (
                                 (
-                                    <tr key={question.question_id} className="border-2 bg-gray-700/30 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-black">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <tr key={question.question_id} className="border-2 bg-gray-700/30 border-gray-700  hover:bg-black">
+                                        <th scope="row" className="px-6 py-4 font-medium  whitespace-nowrap text-white">
                                             {question.question_id}
                                         </th>
                                         <td className="px-6 py-4  text-lg">
@@ -157,9 +157,9 @@ const UserAnswered = () => {
                             <tr>
                                 <td colSpan="5" className="px-6 py-4">
                                     <div className="flex justify-between">
-                                        <button onClick={()=> handlePagination('prev')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all " disabled={isLoading||prevDisabled}>
+                                        <button onClick={()=> handlePagination('prev')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)]  ease-out hover:translate-y-1 transition-all " disabled={isLoading||prevDisabled}>
                                             Prev</button>
-                                        <button onClick={()=> handlePagination('next')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all " disabled={isLoading || nextDisabled}>
+                                        <button onClick={()=> handlePagination('next')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all " disabled={isLoading || nextDisabled}>
                                             Next</button>
                                     </div>
                                 </td>
@@ -176,9 +176,9 @@ const UserAnswered = () => {
                                 <tr>
                                     <td colSpan="5" className="px-6 py-4">
                                         <div className="flex justify-between">
-                                            <button onClick={()=> handlePagination('prev')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all " disabled={isLoading || prevDisabled}>
+                                            <button onClick={()=> handlePagination('prev')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)]  ease-out hover:translate-y-1 transition-all " disabled={isLoading || prevDisabled}>
                                                 Prev</button>
-                                            <button onClick={()=> handlePagination('next')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] text-black bg-white ease-out hover:translate-y-1 transition-all " disabled={isLoading || nextDisabled}>
+                                            <button onClick={()=> handlePagination('next')} className=" text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 p-10 rounded-lg shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)]  ease-out hover:translate-y-1 transition-all " disabled={isLoading || nextDisabled}>
                                                 Next</button>
                                         </div>
                                     </td>
