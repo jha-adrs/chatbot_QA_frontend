@@ -59,7 +59,7 @@ const Navbar = () => {
                         </svg>
                         Question Category ({capitalize(category)})
                     </button>
-                    <button onClick={handleSignout} className='ml-8 mr-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm  text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
+                    <button onClick={handleSignout} className='ml-8 mr-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm bg-transparent text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
                         Signout
                     </button>
                     {showtoggle && (
