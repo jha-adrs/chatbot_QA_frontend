@@ -53,17 +53,17 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div ref={dropdownRef} className="relative flex items-center md:order-2">
-                    <button type="button" onClick={handleToggle} className="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-primary-700 dark:hover:bg-primary-700 dark:hover:text-white border-2 rounded-md border-primary-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded">
+                    <button type="button" onClick={handleToggle} className="inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-white rounded-lg cursor-pointer hover:bg-primary-700 hover:bg-primary-700 hover:text-white border-2 rounded-md border-primary-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded">
                         <svg className='w-5 h-5 mr-2' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                         Question Category ({capitalize(category)})
                     </button>
-                    <button onClick={handleSignout} className='ml-8 mr-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm text-gray-900 dark:text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 dark:hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
+                    <button onClick={handleSignout} className='ml-8 mr-8 inline-flex items-center font-medium justify-center px-4 py-2 text-sm  text-white rounded-lg cursor-pointer hover:bg-danger-700 dark:hover:bg-danger-700 hover:text-white border-2 rounded-md border-danger-700 hover:border-white shadow-[0_9px_0_rgb(0,0,0)] hover:shadow-[0_4px_0px_rgb(0,0,0)] ease-out hover:translate-y-1 transition-all rounded'>
                         Signout
                     </button>
                     {showtoggle && (
-                        <div className=" absolute left-0 top-0 mt-10 z-50 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-black" id="language-dropdown-menu">
+                        <div className=" absolute left-0 top-0 mt-10 z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow bg-black" id="language-dropdown-menu">
                             <ul className="py-2 font-medium" role="none">
                                 <li>
                                     <div onClick={() => { changeCategory(1) }} className=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
