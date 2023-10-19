@@ -78,7 +78,7 @@ const UserAnswered = () => {
         }
 
         if (!dataFetched.current) {
-            console.log("category fetching again", category);
+            console.log("categorys fetching again", category);
             fetchQuestions();
         }
     }, [category, navigate,page, limit]);
