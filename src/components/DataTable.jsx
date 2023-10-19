@@ -24,7 +24,6 @@ const DataTable = () => {
     if (categoryRef.current !== category) {
       categoryRef.current = category;
       dataFetched.current = false;
-      console.log("Changing") // Reset the flag when category changes
     }
 
     if (!dataFetched.current) {
@@ -50,7 +49,7 @@ const DataTable = () => {
           })
           .then(({ data }) => {
             const res = { data: data.data }
-            console.log("res", res);
+            
             if (res.data.length === 0) {
               setHasQuestions(false);
               dataFetched.current = true; // Mark data as fetched
@@ -93,7 +92,6 @@ const DataTable = () => {
       answer_text: answers[question_id]
     }));
 
-    console.log(accessToken, answerArray);
 
     await axios
       .post(
@@ -111,7 +109,6 @@ const DataTable = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         window.location.reload();
       })
       .catch((err) => {

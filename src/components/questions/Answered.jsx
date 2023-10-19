@@ -28,7 +28,7 @@ const Answered = () => {
     
     const fetchQuestions = async () => {
         const accessToken = localStorage.getItem('accessToken');
-        console.log("Fetching questions", category , page, pageRef.current, dataFetched.current);
+        
         if (accessToken) {
             try {
                 const response = await axios.post(`${config.SERVER_URL}/api/fetchanswered/${category}`, {
@@ -85,12 +85,12 @@ const Answered = () => {
 
     const handlePagination = (direction) => {
         const newPage = direction === 'next' ? page+ 1 : page - 1;
-        console.log("newPage",direction, page);
+        
 
         if (newPage >= 1) {
             setState(prevState => ({ ...prevState, isLoading: true, error: null,page:newPage, questions: [], prevDisabled: newPage === 1}));
         }
-        console.log("newPage",direction, newPage, page);
+        
     };
 
     if (error) {

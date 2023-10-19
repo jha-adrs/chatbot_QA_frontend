@@ -15,7 +15,6 @@ async function generateOTP(email) {
         .then(data => data.json())
         .then(data => {
             if (data.success) {
-                console.log(data)
                 return data
             }
             else {
@@ -36,7 +35,6 @@ async function signupUser(credentials) {
         .then(data => data.json())
         .then(data => {
             if (data.success) {
-                console.log(data)
                 return data
             }
             else {

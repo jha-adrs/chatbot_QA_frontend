@@ -9,7 +9,8 @@ const Navbar = () => {
     const dropdownRef = useRef(null)
     const changeCategory = (value) => {
         updateCategory(value)
-        console.log("changeCategory called", value, config.CATEGORY_MAP[value], category)
+        setShowtoggle(false)
+        
     }
 
     const [showtoggle, setShowtoggle] = useState(false)
@@ -65,38 +66,39 @@ const Navbar = () => {
                     {showtoggle && (
                         <div className=" absolute left-0 top-0 mt-10 z-50 text-base list-none  divide-y divide-gray-100 rounded-lg shadow bg-black" id="language-dropdown-menu">
                             <ul className="py-2 font-medium" role="none">
+                                
                                 <li>
-                                    <div onClick={() => { changeCategory(1) }} className=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                    <div onClick={() => { changeCategory(1) }} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            {category == 'try' ? "✅" : ""}   1. TRY
+                                            {category == 'fee' ? "✅" : ""} 1. Fee
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={() => { changeCategory(2) }} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            {category == 'fee' ? "✅" : ""} 2. Fee
+                                            {category == 'academics' ? "✅" : ""} 2. Academics
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={() => { changeCategory(3) }} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            {category == 'academics' ? "✅" : ""} 3. Academics
+                                            {category == 'admission' ? "✅" : ""} 3. Admissions
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div onClick={() => { changeCategory(4) }} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            {category == 'admission' ? "✅" : ""} 4. Admissions
+                                            {category == 'infrastructure' ? "✅" : ""} 4. Infrastructure
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <div onClick={() => { changeCategory(5) }} className="cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                    <div onClick={() => { changeCategory(5) }} className=" cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                         <div className="inline-flex items-center">
-                                            {category == 'infrastructure' ? "✅" : ""} 5. Infrastructure
+                                            {category == 'try' ? "✅" : ""}   5. TRY
                                         </div>
                                     </div>
                                 </li>

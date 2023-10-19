@@ -25,7 +25,6 @@ async function generateOTP(user_id,email) {
       .then(data => data.json())
       .then(data => {
           if (data.success) {
-              console.log(data)
               return data
           }
           else {
@@ -63,7 +62,7 @@ export default function Login() {
     }
     setIsLoading(true);
     const response = await loginUser({ email, password });
-    console.log(response)
+   
     if (response.success) {
       localStorage.setItem('accessToken', response.token); // Store the token
       localStorage.setItem('user_id', response.user_id ); // Store the user_id
@@ -74,7 +73,7 @@ export default function Login() {
     else {
       if (response.message == "User not activated yet!") {
         const otp_res =await generateOTP(response.user_id,email)
-        console.log(otp_res)
+        
         if(!otp_res.success){
           setShowAlert(true)
           setAlertMessage(otp_res.message)

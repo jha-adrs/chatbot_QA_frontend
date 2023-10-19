@@ -16,6 +16,7 @@ import { AppContextProvider } from './context/context';
 import Answered from './components/questions/Answered';
 import UserAnswered from './components/questions/UserAnswered';
 import OTPVerification from './components/OTPVerification';
+import Chatbot from './components/questions/Chatbot';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/verifyemail',
     element: <><OTPVerification /></>
+  },
+  {
+    path: '/chat',
+    element: <Chatbot />
   }
   
   
