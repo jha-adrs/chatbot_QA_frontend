@@ -1,15 +1,26 @@
+import { Bot } from 'lucide-react'
 import Banner from './Banner'
 import DataTable from './DataTable'
 import { useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 const Dashboard = () => {
-  const [showBanner, setShowBanner] = useState(true)
+  const router = useNavigate()
+  const bannerClosed = localStorage.getItem('bannerClosed') === 'true'
+  const [showBanner, setShowBanner] = useState(!bannerClosed&&true)
+  const setBannerClosed = () => {
+    localStorage.setItem('bannerClosed', true)
+    setShowBanner(false)
+  }
   return (
     <div className='flex border-2 rounded-lg mt-11 '> 
     <DataTable />
     {showBanner && (
-      <Banner close={() => {
-        setShowBanner(false)
-      }}/>
+      <Banner close={setBannerClosed}/>
+    )}
+    {!showBanner && (
+      <button title='Chatbot' onClick={()=>router('/chat')} className="fixed bottom-0 right-0 mb-4 mr-4 bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-full">
+      <Bot size={32} />
+    </button>
     )}
     </div>
   )

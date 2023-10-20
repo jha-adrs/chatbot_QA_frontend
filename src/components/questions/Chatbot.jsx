@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import config from '../../config/config';
 import { Link, useNavigate } from 'react-router-dom';
+import {  BrainCircuit, HomeIcon, LogInIcon, Search } from 'lucide-react';
 export default function Chatbot() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -60,15 +61,26 @@ export default function Chatbot() {
   };
 
   return (
-    <div className={`max-w-7xl mx-auto px-6 sm:px-12 lg:px-48`}>
+    
+    <div className={`max-w-7xl mx-auto px-6 sm:px-12 lg:px-48 inset-0 `}>
       <Link to='/dashboard' className='fixed top-{0.1rem} left-10 text-white border-2 border-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-primary-800 hover:text-white'>
-         Home
+        <span className='flex flex-row'><HomeIcon/></span>
       </Link>
       <div className='p-16'>
         <div className='p-8'>
           <h1 className='text-5xl font-bold text-center'>
-            Welcome to QA Portal
+            Chatbot  <BrainCircuit className='w-10 h-10 inline-block text-white'/>
           </h1>
+          <h3 className='pt-4 font-semibold text-gray-400'>
+            Alpha v0.1
+          </h3>
+          <p className='text-gray-500 pt-4'>
+            
+            Please note that informartion provided here is not guaranteed to be correct. 
+            <br/>Please refer to official sources for accurate information.
+            <br/>
+
+          </p>
         </div>
         <form>
           <label
@@ -79,26 +91,12 @@ export default function Chatbot() {
           </label>
           <div className='relative'>
             <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-              <svg
-                aria-hidden='true'
-                className='w-5 h-5 text-gray-500'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-                ></path>
-              </svg>
+              <Search className='w-5 h-5 text-gray-500' />
             </div>
             <input
               type='search'
               id='default-search'
-              className='block w-full p-4 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-900 focus:ring-blue-500 focus:border-blue-500'
+              className='block text-left w-full p-4 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-900 focus:ring-blue-500 focus:border-blue-500'
               placeholder='Ask me about VIT University'
               onChange={(e) => setQuestion(e.target.value)}
               onKeyDown={(e) => {
@@ -113,7 +111,7 @@ export default function Chatbot() {
               className='text-white absolute right-2.5 bottom-2.5 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2'
               onClick={answerQuestion}
             >
-              Search
+              <LogInIcon className='p-0 m-0 w-4 h-4'/>
             </button>
           </div>
         </form>

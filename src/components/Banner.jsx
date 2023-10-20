@@ -6,7 +6,7 @@ const Banner = ({close,...props}) => {
 
     return (
 
-        <div id="informational-banner" tabIndex="-1" className="fixed bottom-0 left-0 z-50 flex flex-col justify-between w-full p-4 border-b border-gray-200 md:flex-row bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+        <div id="informational-banner" tabIndex="-1" className="fixed bottom-0 left-0 z-50 flex flex-col justify-between w-full p-4 border-b  md:flex-row bg-gray-700 border-gray-600"
         {...props}>
             <div className="mb-4 md:mb-0 md:mr-4">
                 <h2 className="mb-1 text-base font-semibold text-white">Inital Version of Chatbot is out!!</h2>
