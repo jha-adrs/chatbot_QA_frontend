@@ -187,7 +187,7 @@ const DataTable = () => {
                   </td>
                   <td className="px-6 py-4">
                     <input onChange={(e) => { setAnswers({ ...answers, [question.question_id]: e.target.value }) }} name="answer" placeholder="Answer" 
-                    className=" border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700/30 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required="" />
+                    className=" border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700/30 dark:border-gray-600 dark:placeholder-gray-400 text-white" required="" />
                   </td>
                   <td className="px-6 py-4 text-right">
                   </td>

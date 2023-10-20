@@ -9,7 +9,7 @@ const Banner = ({close,...props}) => {
         <div id="informational-banner" tabIndex="-1" className="fixed bottom-0 left-0 z-50 flex flex-col justify-between w-full p-4 border-b border-gray-200 md:flex-row bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
         {...props}>
             <div className="mb-4 md:mb-0 md:mr-4">
-                <h2 className="mb-1 text-base font-semibold text-gray-900 dark:text-white">Inital Version of Chatbot is out!!</h2>
+                <h2 className="mb-1 text-base font-semibold text-white">Inital Version of Chatbot is out!!</h2>
                 <p className="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">You can checkout the chatbot feature trained on very limited data here</p>
             </div>
             <div className="flex items-center flex-shrink-0">

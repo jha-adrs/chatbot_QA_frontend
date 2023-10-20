@@ -73,7 +73,7 @@ export default function Chatbot() {
         <form>
           <label
             htmlFor='default-search'
-            className='mb-2 text-sm font-medium text-gray-900 sr-only'
+            className='mb-2 text-sm font-medium text-gray-100 sr-only'
           >
             Search
           </label>
