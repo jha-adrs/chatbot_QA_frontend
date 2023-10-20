@@ -63,7 +63,7 @@ export default function Chatbot() {
   return (
     
     <div className={`max-w-7xl mx-auto px-6 sm:px-12 lg:px-48 inset-0 `}>
-      <Link to='/dashboard' className='fixed top-{0.1rem} left-10 text-white border-2 border-primary-500 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-primary-800 hover:text-white'>
+      <Link to='/dashboard' className='fixed top-{0.1rem} left-10 text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-white'>
         <span className='flex flex-row'><HomeIcon/></span>
       </Link>
       <div className='p-16'>
@@ -96,7 +96,7 @@ export default function Chatbot() {
             <input
               type='search'
               id='default-search'
-              className='block text-left w-full p-4 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-gray-900 focus:ring-blue-500 focus:border-blue-500'
+              className='block text-left w-full p-4 pl-10 text-sm text-gray-100 border border-gray-300 rounded-lg bg-zinc-900 focus:ring-primary-500 '
               placeholder='Ask me about VIT University'
               onChange={(e) => setQuestion(e.target.value)}
               onKeyDown={(e) => {
