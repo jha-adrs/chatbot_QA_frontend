@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import config from '../../config/config';
 import { Link, useNavigate } from 'react-router-dom';
-import {  BrainCircuit, HomeIcon, LogInIcon, Search } from 'lucide-react';
+import {  BrainCircuit, HomeIcon, LogInIcon, LogOutIcon, Search } from 'lucide-react';
 export default function Chatbot() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -59,13 +59,21 @@ export default function Chatbot() {
       setLoading(false);
     }
   };
-
+  const handleSignout = () => {
+    localStorage.clear();
+    navigate('/login')
+}
   return (
     
     <div className={`max-w-7xl mx-auto px-6 sm:px-12 lg:px-48 inset-0 `}>
-      <Link to='/dashboard' className='fixed top-{0.1rem} left-10 text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-white'>
-        <span className='flex flex-row'><HomeIcon/></span>
+      <div className='fixed top-{0.1rem} right-15 flex flex-row'>
+      <Link to='/dashboard' className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-green'>
+        <HomeIcon/>
       </Link>
+      <Link onClick={handleSignout} className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-red-800'>
+        <LogOutIcon/>
+      </Link>
+      </div>
       <div className='p-16'>
         <div className='p-8'>
           <h1 className='text-5xl font-bold text-center'>

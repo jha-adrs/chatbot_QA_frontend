@@ -97,7 +97,7 @@ const OTPVerification = () => {
             localStorage.setItem('accessToken', response.token);
             setIsLoading(false);
             setAlertDetails({ showAlert: true, alertMessage: "OTP Verified!", alertInstructions: "Redirecting to login screen" })
-            return navigate('/dashboard');
+            return navigate('/select')
         }
         else {
             if (response.message === "OTP Expired") {

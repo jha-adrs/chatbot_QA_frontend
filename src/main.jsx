@@ -17,10 +17,11 @@ import Answered from './components/questions/Answered';
 import UserAnswered from './components/questions/UserAnswered';
 import OTPVerification from './components/OTPVerification';
 import Chatbot from './components/questions/Chatbot';
+import SelectionPage from './components/SelectionPage';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />,
+    element: localStorage.getItem('accessToken')?<SelectionPage />:<Login />,
     errorElement: <NotFound />,
   },
   {
@@ -55,6 +56,9 @@ const router = createBrowserRouter([
   {
     path: '/chat',
     element: <Chatbot />
+  },{
+    path: '/select',
+    element: <SelectionPage />
   }
   
   

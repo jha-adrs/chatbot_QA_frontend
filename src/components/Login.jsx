@@ -67,8 +67,7 @@ export default function Login() {
       localStorage.setItem('accessToken', response.token); // Store the token
       localStorage.setItem('user_id', response.user_id ); // Store the user_id
       setIsLoading(false)
-
-      return navigate('/dashboard')
+      navigate('/select')
     }
     else {
       if (response.message == "User not activated yet!") {
@@ -106,7 +105,7 @@ export default function Login() {
     setIsSubmitDisabled(false)
   }
   document.title = "Login | QA Portal"
-
+  
   return (
     <section className="bg-main-dark2 rounded-lg">
       {showAlert && (
