@@ -89,6 +89,11 @@ export default function Chatbot() {
             <br/>
 
           </p>
+          <p className='text-white pt-4 font-semibold'>
+            We are still in the process of training our chatbot. We understand that it is not perfect yet and needs a lot of improvement.
+            <br/>
+            We are collecting information on what questions are being asked and will be training our chatbot to answer them.
+          </p>
         </div>
         <form>
           <label
