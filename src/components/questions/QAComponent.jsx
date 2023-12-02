@@ -105,14 +105,14 @@ const MiniTextComponent = ({ type, text, isLoading, loadingQuestionuuid , curren
     </div>
     const userDiv = <div className='w-6 h-6 rounded-full bg-purple-700 flex items-center justify-center'>
         <p className='font-light text-xs p-0 m-0'>
-            AJ
+            U
         </p>
     </div>;
     console.log('MiniTextComponent', isLoading, loadingQuestionuuid, currentuuid)
     if (text === null && !isLoading ) return (<></>)
     return (
         <>
-            {(isLoading && loadingQuestionuuid == currentuuid) ? <Loader2 className='animate-spin' /> : (<div className='flex flex-row items-center justify-start mb-4'>
+            {( type!=="question" && (loadingQuestionuuid == currentuuid)) ? <Loader2 className='animate-spin' /> : (<div className='flex flex-row items-center justify-start mb-4'>
                 <div className="flex flex-col">
                     <div className="flex">
                         {type == 'question' ? userDiv : chatbotDiv}

@@ -1,5 +1,5 @@
 import { Brain, BrainCircuit, ChevronFirst, ChevronUp, Home, LogIn, LogOut, PenSquare, Search, ShieldQuestion, Upload } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import "../../assets/extra.css"
 import { TooltipWrapper } from '../Helpers'
 import QAComponent from './QAComponent'
@@ -28,19 +28,21 @@ const Chatbotv2 = () => {
         navigate('/login');
     }
 
-    const handleAnswering = (textInput) => {
-        console.log('handleAnswering', textInput);
-        setIsAnswerFetching(true);
-        const uuid = uuidv4();
-        const timestamp = Date.now();
-        // Store the current input value in a variable
-
-        setQuestions([...questions, { uuid: uuid, question: textInput, timestamp: timestamp }]);
-        setRerender(rerender + 1);
-        setTextInput('');
-        answerQuestion(textInput, uuid);
-
-    };
+    const handleAnswering = useCallback((textInput)=>{
+        
+            console.log('handleAnswering', textInput);
+            setIsAnswerFetching(true);
+            const uuid = uuidv4();
+            const timestamp = Date.now();
+            // Store the current input value in a variable
+    
+            setQuestions([...questions, { uuid: uuid, question: textInput, timestamp: timestamp }]);
+            setRerender(rerender + 1);
+            setTextInput('');
+            answerQuestion(textInput, uuid);
+    
+        
+    },[])
 
     const answerQuestion = async (text, uuid) => {
         try {
@@ -62,6 +64,7 @@ const Chatbotv2 = () => {
             });
             if (response.success === 0) {
                 setIsAnswerFetching(false);
+                setLoadingQuestionuuid('');
                 setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
             }
 
@@ -89,12 +92,13 @@ const Chatbotv2 = () => {
             // Set answer directly as stream is disabled
             setAnswers([...oldAnswers, { uuid: uuid, answer: result, answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
 
-
+            setLoadingQuestionuuid('');
             setIsAnswerFetching(false);
         } catch (error) {
             console.log(error);
             setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
             setIsAnswerFetching(false);
+            setLoadingQuestionuuid('');
         }
     };
 
