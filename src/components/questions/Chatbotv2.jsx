@@ -5,16 +5,28 @@ import { TooltipWrapper } from '../Helpers'
 import QAComponent from './QAComponent'
 import { z } from "zod"
 import { v4 as uuidv4 } from 'uuid';
+import config from '../../config/config'
+import { useNavigate } from 'react-router-dom'
+
 const questionSchema = z.object({
     question: z.string().max(1000).min(1),
 
 })
+
+
 const Chatbotv2 = () => {
     const [answers, setAnswers] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [textInput, setTextInput] = useState('');
     const [isAnswerFetching, setIsAnswerFetching] = useState(false);
     const [rerender, setRerender] = useState(0);
+    const [loadingQuestionuuid, setLoadingQuestionuuid] = useState('');
+    const navigate = useNavigate();
+    const user_id = localStorage.getItem('user_id');
+    const accessToken = localStorage.getItem('accessToken');
+    if (!user_id || !accessToken) {
+        navigate('/login');
+    }
 
     const handleAnswering = (textInput) => {
         console.log('handleAnswering', textInput);
@@ -26,14 +38,64 @@ const Chatbotv2 = () => {
         setQuestions([...questions, { uuid: uuid, question: textInput, timestamp: timestamp }]);
         setRerender(rerender + 1);
         setTextInput('');
-        setTimeout(() => {
-            {
-                setAnswers([...answers, { uuid: uuid, question: textInput, timestamp: timestamp, answer: 'This is a dummy answer'+rerender, answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
-                setRerender(rerender + 1);
-                setIsAnswerFetching(false);
-            }
-        }, 1000);
+        answerQuestion(textInput, uuid);
 
+    };
+
+    const answerQuestion = async (text, uuid) => {
+        try {
+            console.log('answerQuestion', text, uuid);
+
+            setIsAnswerFetching(true);
+            setLoadingQuestionuuid(uuid);
+            const response = await fetch(`${config.SERVER_URL}/chat/generate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({
+                    query: text,
+                    user_id: user_id,
+                    stream: false,
+                }),
+            });
+            if (response.success === 0) {
+                setIsAnswerFetching(false);
+                setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+            }
+
+            // This data is a ReadableStream
+            const data = response.body;
+            if (!data) {
+                return;
+            }
+            console.log('data', data);
+
+            const oldAnswers = [...answers];
+            const reader = data.getReader();
+            const decoder = new TextDecoder();
+            let done = false;
+            let result = '';
+
+            while (!done) {
+                const { value, done: doneReading } = await reader.read();
+                done = doneReading;
+                if (value) {
+                    result += decoder.decode(value);
+                }
+            }
+            console.log('result', result);
+            // Set answer directly as stream is disabled
+            setAnswers([...oldAnswers, { uuid: uuid, answer: result, answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+
+
+            setIsAnswerFetching(false);
+        } catch (error) {
+            console.log(error);
+            setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+            setIsAnswerFetching(false);
+        }
     };
 
     return (
@@ -41,8 +103,20 @@ const Chatbotv2 = () => {
             {/** Upper nav */}
             <div className='fixed items-center top-0 w-full bg-zinc-800 h-10 justify-between flex'>
                 <div className='mx-4 inline-flex gap-x-8 cursor-pointer'>
-                    <TooltipWrapper Component={Home} text='Home' classnames='w-4 h-4 text-white cursor-pointer' />
-                    <TooltipWrapper Component={PenSquare} text='New Chat' classnames='w-4 h-4 text-white cursor-pointer' />
+                    <TooltipWrapper Component={Home} text='Home' classnames='w-4 h-4 text-white cursor-pointer' onClick={()=>{
+                        navigate('/dashboard');
+                    }}/>
+                    <TooltipWrapper Component={PenSquare} text='New Chat' classnames='w-4 h-4 text-white cursor-pointer' onClick={
+                        ()=>{
+                            
+                            setQuestions([]);
+                            setAnswers([]);
+                            setTextInput('');
+                            setIsAnswerFetching(false);
+                            setRerender(0);
+                        }
+                    
+                    }/>
                 </div>
                 <div>
                     <p className="font-bold text-lg gap-x-2 inline-flex items-center">
@@ -58,7 +132,7 @@ const Chatbotv2 = () => {
             {/** Main */}
             {/*Dont give padding here or margin */}
             <div className="bg-zinc-900  overflow-clip h-screen w-screen items-center ">
-                <QAComponent key={rerender} questions={questions} isAnswerFetching={isAnswerFetching} answers={answers} />
+                <QAComponent key={rerender} questions={questions} isAnswerFetching={isAnswerFetching} answers={answers} loadingQuestionuuid={loadingQuestionuuid} />
             </div>
 
             {/*Lower Input component*/}

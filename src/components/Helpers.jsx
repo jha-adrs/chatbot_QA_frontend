@@ -2,11 +2,11 @@
 
 import * as Tooltip from '@radix-ui/react-tooltip';
 
-export const TooltipWrapper = ({Component, text, classnames}) => {
+export const TooltipWrapper = ({Component, text, classnames,...props}) => {
   return (
     
       <Tooltip.Root>
-        <Tooltip.Trigger asChild>
+        <Tooltip.Trigger asChild {...props}>
             <Component className={`${classnames}`} />
         </Tooltip.Trigger>
         <Tooltip.Portal>

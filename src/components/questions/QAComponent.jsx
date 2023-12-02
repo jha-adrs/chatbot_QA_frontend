@@ -1,17 +1,32 @@
 import _ from 'lodash'
-import { BrainCircuit } from 'lucide-react'
-import React, { useEffect } from 'react'
+import { BrainCircuit, Loader2 } from 'lucide-react'
+import React, { useEffect, useRef } from 'react'
 
-const QAComponent = ({ questions,isAnswerFetching ,answers}) => {
+const customScrollBar = {
+    '&::-webkit-scrollbar': {
+        width: '0.4em'
+
+    },
+    '&::-webkit-scrollbar-track': {
+        boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+        webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '&::-webkit-scrollbar-thumb': {
+        backgroundColor: 'rgba(0,0,0,.1)',
+        outline: '1px solid slategrey'
+    }
+}
+
+const QAComponent = ({ questions, isAnswerFetching, answers,loadingQuestionuuid }) => {
     useEffect(() => {
-        console.log('QAComponent', questions,answers)
+        console.log('QAComponent', questions, answers)
 
-    }, [questions,answers])
+    }, [questions, answers])
 
     return (
         <div className='py-10 h-screen'>
             {
-                questions?.length === 0 ? <InitialComponent /> : <QAPopulatedComponent questions={questions} answers={answers}  />
+                questions?.length === 0 ? <InitialComponent /> : <QAPopulatedComponent questions={questions} answers={answers} isAnswerFetching={isAnswerFetching} loadingQuestionuuid={loadingQuestionuuid} />
             }
         </div>
     )
@@ -41,31 +56,39 @@ const InitialComponent = () => {
     )
 }
 
-const QAPopulatedComponent = ({ questions,answers }) => {
+const QAPopulatedComponent = ({ questions, answers, isAnswerFetching,loadingQuestionuuid }) => {
+    const ScrollEndRef = useRef(null);
+    const scrollToBottom = () => {
+        ScrollEndRef.current?.scrollIntoView({ behavior: "auto" })
+    }
+    useEffect(() => {
+        scrollToBottom();
+    }, [questions, answers])
     return (
         <div className="flex w-screen h-screen justify-center">
             <div className='flex flex-col h-full w-[75%] sm:w-[60%] md:w-[50%] '>
-                <div className='px-5 py-5 justify-start  w-full h-full'>
+                <div className='px-5 py-5 justify-start  w-full h-full max-h-[80%] overflow-y-auto' >
                     {questions?.map((question, index) => {
                         // For each question and answer, we need to render a QAComponent
                         // We need to check if the answer is present or not
                         // If answer is present, we need to render the answer and question
                         return (
                             <>
-                            
-                            <MiniTextComponent key={question?.uuid} type='question' text={question?.question} />
-                            {answers && answers?.length > 0 && answers?.map((answer, index) => {
-                                if (answer?.uuid === question?.uuid) {
-                                    return (
-                                        <MiniTextComponent key={answer?.answer_uuid} type='answer' text={answer?.answer} />
-                                    )
-                                }
-                            })}
-                                
+
+                                <MiniTextComponent key={question?.uuid} type='question' text={question?.question} />
+                                {answers && answers?.length > 0 && answers?.map((answer, index) => {
+                                    if (answer?.uuid === question?.uuid) {
+                                        return (
+                                            <MiniTextComponent key={answer?.answer_uuid} type='answer' text={answer?.answer} isLoading={isAnswerFetching} loadingQuestionuuid={loadingQuestionuuid} currentuuid={question?.uuid} />
+                                        )
+                                    }
+                                })}
+
                             </>
                         )
 
                     })}
+                    <div ref={ScrollEndRef} />
                 </div>
 
             </div>
@@ -73,30 +96,33 @@ const QAPopulatedComponent = ({ questions,answers }) => {
     )
 }
 
-const MiniTextComponent = ({ type, text }) => {
+const MiniTextComponent = ({ type, text, isLoading, loadingQuestionuuid , currentuuid}) => {
 
     const chatbotDiv = <div className='w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center'>
         <p className='font-medium text-xs p-0 m-0'>
             <BrainCircuit className='w-4 h-4 text-white font-medium' />
         </p>
     </div>
-    const userDiv = <div className='w-6 h-6 rounded-full bg-zinc-700 flex items-center justify-center'>
+    const userDiv = <div className='w-6 h-6 rounded-full bg-purple-700 flex items-center justify-center'>
         <p className='font-light text-xs p-0 m-0'>
             AJ
         </p>
-    </div>
-    if (text === null) return (<></>)
+    </div>;
+    console.log('MiniTextComponent', isLoading, loadingQuestionuuid, currentuuid)
+    if (text === null && !isLoading ) return (<></>)
     return (
-        <div className='flex flex-row items-center justify-start mb-4'>
-            <div className="flex flex-col">
-                <div className="flex">
-                    {type == 'question' ? chatbotDiv : userDiv}
-                    <p className='text-gray-300 text-sm font-extrabold ml-2'>{type == 'question' ? "You" : "UniChat"}</p>
+        <>
+            {(isLoading && loadingQuestionuuid == currentuuid) ? <Loader2 className='animate-spin' /> : (<div className='flex flex-row items-center justify-start mb-4'>
+                <div className="flex flex-col">
+                    <div className="flex">
+                        {type == 'question' ? userDiv : chatbotDiv}
+                        <p className='text-gray-300 text-sm font-extrabold ml-2'>{type == 'question' ? "You" : "UniChat"}</p>
+                    </div>
+                    <div className='ml-6'>
+                        <p className='text-gray-300 text-sm font-medium ml-2 w-full overflow-auto break-all'>{text}</p>
+                    </div>
                 </div>
-                <div className='ml-6'>
-                    <p className='text-gray-300 text-sm font-medium ml-2 w-full overflow-auto break-all'>{text}</p>
-                </div>
-            </div>
-        </div>
+            </div>)}
+        </>
     )
 }
