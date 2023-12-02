@@ -112,17 +112,19 @@ const MiniTextComponent = ({ type, text, isLoading, loadingQuestionuuid , curren
     if (text === null && !isLoading ) return (<></>)
     return (
         <>
-            {( type!=="question" && (loadingQuestionuuid == currentuuid)) ? <Loader2 className='animate-spin' /> : (<div className='flex flex-row items-center justify-start mb-4'>
+            <div className='flex flex-row items-center justify-start mb-4'>
                 <div className="flex flex-col">
                     <div className="flex">
                         {type == 'question' ? userDiv : chatbotDiv}
                         <p className='text-gray-300 text-sm font-extrabold ml-2'>{type == 'question' ? "You" : "UniChat"}</p>
                     </div>
                     <div className='ml-6'>
-                        <p className='text-gray-300 text-sm font-medium ml-2 w-full overflow-auto break-all'>{text}</p>
+                        <p className='text-gray-300 text-sm font-medium ml-2 w-full overflow-auto break-all no-scrollbar'>
+                        {( type!=="question" && (loadingQuestionuuid == currentuuid)) ? <Loader2 className='animate-spin' /> : text}
+                        </p>
                     </div>
                 </div>
-            </div>)}
+            </div>
         </>
     )
 }

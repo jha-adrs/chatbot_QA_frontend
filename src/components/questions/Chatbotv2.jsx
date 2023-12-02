@@ -153,7 +153,12 @@ const Chatbotv2 = () => {
                 </div>
                 <div className='mx-4 inline-flex gap-x-8 cursor-pointer'>
                     <TooltipWrapper Component={ShieldQuestion} text='Help' classnames='w-4 h-4 text-white cursor-pointer' />
-                    <TooltipWrapper Component={LogOut} text='Logout' classnames='w-4 h-4 text-white cursor-pointer' />
+                    <TooltipWrapper Component={LogOut} text='Logout' classnames='w-4 h-4 text-white cursor-pointer' onClick={
+                        ()=>{
+                            localStorage.clear();  
+                            navigate('/login');
+                        }
+                    }/>
                 </div>
             </div>
 
