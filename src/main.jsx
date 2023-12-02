@@ -20,10 +20,13 @@ import Chatbot from './components/questions/Chatbot';
 import SelectionPage from './components/SelectionPage';
 import Chatbotv2 from './components/questions/Chatbotv2.jsx';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
+import { ToastProvider } from '@radix-ui/react-toast';
+import Loginv2 from './components/Loginv2.jsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: localStorage.getItem('accessToken') ? <SelectionPage /> : <Login />,
+    element: localStorage.getItem('accessToken') ? <Chatbotv2 /> : <Login />,
     errorElement: <NotFound />,
   },
   {
@@ -61,6 +64,11 @@ const router = createBrowserRouter([
   }, {
     path: '/select',
     element: <SelectionPage />
+  },
+  {
+    path: '/loginv2',
+    element: <Loginv2 />,
+  
   }
 
 
@@ -70,9 +78,11 @@ inject();
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <AppContextProvider>
-      <TooltipProvider>
-      <RouterProvider router={router} />
-      </TooltipProvider>
+      <ToastProvider>
+        <TooltipProvider>
+          <RouterProvider router={router} />
+        </TooltipProvider>
+      </ToastProvider>
     </AppContextProvider>
 
   </React.StrictMode>,

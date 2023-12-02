@@ -1,7 +1,8 @@
-import  { useState } from 'react'
+import React, { useState } from 'react'
 import Spinner from './Spinner'
 import { BrainCircuit } from 'lucide-react'
 import config from '../config/config'
+import Alert from './Alert';
 import { useNavigate } from 'react-router-dom';
 import * as Toast from '@radix-ui/react-toast';
 import "../index.css"
@@ -115,7 +116,7 @@ export default function Loginv2() {
                 <Toaster message={alertMessage} color={alertColor} instructions={alertInstructions} setOpen={setShowAlert} open={showAlert} />
             )}
             {isLoading ? <Spinner /> : (
-                <div className="flex flex-col w-[100%] sm:w-[70%] md:w-[30%]  h-full bg-black/30 items-center justify-center rounded-xl border-white/20 border-2">
+                <div className="flex flex-col w-[100%] sm:w-[70%] md:w-[40%]  h-full bg-black/30 items-center justify-center rounded-xl">
                     <div className=''>
                         <div className="inline-flex gap-x-2 items-center ">
                             <BrainCircuit size={50} />
@@ -141,7 +142,7 @@ export default function Loginv2() {
                                 <div className="flex items-center justify-between">
                                     <a href="/forgotpassword" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                                 </div>
-                                <button type="submit" onClick={handleSubmit} className="w-[100%] text-white  focus:ring-primary-300 font-medium rounded-lg text-sm h-8 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" disabled={isSubmitDisabled}>Sign in</button>
+                                <button type="submit" onClick={handleSubmit} className="w-[100%] text-white  focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" disabled={isSubmitDisabled}>Sign in</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                     Don’t have an account yet? <a href="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                                 </p>
