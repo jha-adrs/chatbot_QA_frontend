@@ -4,14 +4,16 @@ import Dashboard from './components/Dashboard'
 
 function App() {
 
-  
+
   return (
     <>
-    <Navbar />
-      <Dashboard  />
+      <div className="">
+        <Navbar />
+        <Dashboard />
+      </div>
     </>
-      
-    
+
+
   )
 }
 

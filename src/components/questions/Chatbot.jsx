@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import config from '../../config/config';
 import { Link, useNavigate } from 'react-router-dom';
-import {  BrainCircuit, HomeIcon, LogInIcon, LogOutIcon, Search } from 'lucide-react';
+import { BrainCircuit, HomeIcon, LogInIcon, LogOutIcon, Search } from 'lucide-react';
 export default function Chatbot() {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
@@ -16,43 +16,43 @@ export default function Chatbot() {
   const answerQuestion = async (e) => {
     try {
       console.log('answerQuestion');
-    e.preventDefault();
-    setAnswer('');
-    setLoading(true);
+      e.preventDefault();
+      setAnswer('');
+      setLoading(true);
 
-    const response = await fetch(`${config.SERVER_URL}/chat/generate`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
-      },
-      body: JSON.stringify({
-        query: question,
-        user_id: user_id,
-      }),
-    });
-    if (response.success ===0) {
+      const response = await fetch(`${config.SERVER_URL}/chat/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+          query: question,
+          user_id: user_id,
+        }),
+      });
+      if (response.success === 0) {
+        setLoading(false);
+        setAnswer('Sorry, I cant answer your question. Try again later, ig?');
+      }
+
+      // This data is a ReadableStream
+      const data = response.body;
+      if (!data) {
+        return;
+      }
+
+      const reader = data.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        const chunkValue = decoder.decode(value);
+        setAnswer((prev) => prev + chunkValue);
+      }
       setLoading(false);
-      setAnswer('Sorry, I cant answer your question. Try again later, ig?');
-    }
-
-    // This data is a ReadableStream
-    const data = response.body;
-    if (!data) {
-      return;
-    }
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    while (!done) {
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setAnswer((prev) => prev + chunkValue);
-    }
-    setLoading(false);
     } catch (error) {
       console.log(error);
       setAnswer('Sorry, I cant answer your question. Try again later, ig?');
@@ -62,38 +62,32 @@ export default function Chatbot() {
   const handleSignout = () => {
     localStorage.clear();
     navigate('/login')
-}
+  }
   return (
-    
-    <div className={`max-w-7xl mx-auto px-6 sm:px-12 lg:px-48 inset-0 `}>
-      <div className='fixed top-{0.1rem} right-15 flex flex-row'>
-      <Link to='/dashboard' className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-green'>
-        <HomeIcon/>
-      </Link>
-      <Link onClick={handleSignout} className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-red-800'>
-        <LogOutIcon/>
-      </Link>
+
+    <div className={` mx-auto px-6 sm:px-12 lg:px-48 inset-0 bg-gray-400/10 rounded-lg h-[98%] w-[95%]`}>
+      <div className=' top-{0.1rem}  flex flex-row'>
+        <Link to='/dashboard' className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-green'>
+          <HomeIcon />
+        </Link>
+        <Link onClick={handleSignout} className=' text-white   font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 bg-transparent hover:bg-zinc-900 hover:text-red-800'>
+          <LogOutIcon />
+        </Link>
       </div>
-      <div className='p-16'>
+      <div className='p-8'>
         <div className='p-8'>
           <h1 className='text-5xl font-bold text-center'>
-            Chatbot  <BrainCircuit className='w-10 h-10 inline-block text-white'/>
+            Chatbot  <BrainCircuit className='w-10 h-10 inline-block text-white' />
           </h1>
           <h3 className='pt-4 font-semibold text-gray-400'>
             Alpha v0.1
           </h3>
           <p className='text-gray-500 pt-4'>
-            
-            Please note that informartion provided here is not guaranteed to be correct. 
-            <br/>Please refer to official sources for accurate information.
-            <br/>
+            Please note that informartion provided here is not guaranteed to be correct.
+            <br />Please refer to official sources for accurate information.
+            <br />
+          </p>
 
-          </p>
-          <p className='text-white pt-4 font-semibold'>
-            We are still in the process of training our chatbot. We understand that it is not perfect yet and needs a lot of improvement.
-            <br/>
-            We are collecting information on what questions are being asked and will be training our chatbot to answer them.
-          </p>
         </div>
         <form>
           <label
@@ -121,10 +115,10 @@ export default function Chatbot() {
             />
             <button
               type='submit'
-              className='text-white absolute right-2.5 bottom-2.5 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2'
+              className='text-black absolute right-2.5 bottom-2.5 bg-white hover:bg-zinc-200 focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2'
               onClick={answerQuestion}
             >
-              <LogInIcon className='p-0 m-0 w-4 h-4'/>
+              <LogInIcon className='p-0 m-0 w-4 h-4' />
             </button>
           </div>
         </form>
@@ -152,7 +146,9 @@ export default function Chatbot() {
               </div>
             </div>
           )}
-          <p className='text-lg leading-8 text-white'>{answer}</p>
+          <div className="justify-center text-left w-[100%] h-[50%] bg-zinc-900/50 p-4">
+            <p className='text-lg leading-8 text-gray-100'>{answer}</p>
+          </div>
         </div>
       </div>
     </div>

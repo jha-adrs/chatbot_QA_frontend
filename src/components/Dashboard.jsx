@@ -12,7 +12,7 @@ const Dashboard = () => {
     setShowBanner(false)
   }
   return (
-    <div className='flex border-2 rounded-lg mt-11 '> 
+    <div className='relative flex border-2 rounded-lg  '> 
     <DataTable />
     {showBanner && (
       <Banner close={setBannerClosed}/>
