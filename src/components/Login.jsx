@@ -67,7 +67,7 @@ export default function Login() {
       localStorage.setItem('accessToken', response.token); // Store the token
       localStorage.setItem('user_id', response.user_id ); // Store the user_id
       setIsLoading(false)
-      navigate('/select')
+      navigate('/chat')
     }
     else {
       if (response.message == "User not activated yet!") {

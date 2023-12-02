@@ -67,7 +67,7 @@ const QAPopulatedComponent = ({ questions, answers, isAnswerFetching,loadingQues
     return (
         <div className="flex w-screen h-screen justify-center">
             <div className='flex flex-col h-full w-[75%] sm:w-[60%] md:w-[50%] '>
-                <div className='px-5 py-5 justify-start  w-full h-full max-h-[80%] overflow-y-auto' >
+                <div className='px-5 py-5 justify-start  w-full h-full max-h-[80%] overflow-y-auto no-scrollbar' >
                     {questions?.map((question, index) => {
                         // For each question and answer, we need to render a QAComponent
                         // We need to check if the answer is present or not

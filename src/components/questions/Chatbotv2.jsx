@@ -6,12 +6,38 @@ import QAComponent from './QAComponent'
 import { z } from "zod"
 import { v4 as uuidv4 } from 'uuid';
 import config from '../../config/config'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 
 const questionSchema = z.object({
     question: z.string().max(1000).min(1),
 
 })
+
+const answerReplacer = (answersArray, uuid, answer, timestamp= Date.now()) => {
+    if (typeof answer !== 'string') {
+        return answersArray;
+    }
+    if(typeof answersArray === 'undefined'){
+        return [];
+    }
+    const oldAnswers = [...answersArray];
+    const index = oldAnswers.findIndex((answer) => answer.uuid === uuid);
+    if (index === -1) {
+        // Create new answer
+        oldAnswers.push({
+            uuid: uuid,
+            answer: answer,
+            answer_timestamp: timestamp,
+            answer_uuid: uuidv4(),
+        });
+        return oldAnswers;
+    }
+    oldAnswers[index].answer = answer;
+    oldAnswers[index].answer_timestamp = timestamp;
+    oldAnswers[index].answer_uuid = uuidv4();
+    return oldAnswers;
+}
 
 
 const Chatbotv2 = () => {
@@ -37,6 +63,9 @@ const Chatbotv2 = () => {
             // Store the current input value in a variable
     
             setQuestions([...questions, { uuid: uuid, question: textInput, timestamp: timestamp }]);
+            setAnswers(
+                answerReplacer(answers, uuid, 'Loading')
+            );
             setRerender(rerender + 1);
             setTextInput('');
             answerQuestion(textInput, uuid);
@@ -65,7 +94,7 @@ const Chatbotv2 = () => {
             if (response.success === 0) {
                 setIsAnswerFetching(false);
                 setLoadingQuestionuuid('');
-                setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+                setAnswers(answerReplacer(answers, uuid, 'Sorry, I cant answer your question. Try again later, ig?'));
             }
 
             // This data is a ReadableStream
@@ -90,13 +119,13 @@ const Chatbotv2 = () => {
             }
             console.log('result', result);
             // Set answer directly as stream is disabled
-            setAnswers([...oldAnswers, { uuid: uuid, answer: result, answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+            setAnswers(answerReplacer(answers, uuid, result));
 
             setLoadingQuestionuuid('');
             setIsAnswerFetching(false);
         } catch (error) {
             console.log(error);
-            setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+            setAnswers(answerReplacer(answers, uuid, 'Sorry, I cant answer your question. Try again later?'));
             setIsAnswerFetching(false);
             setLoadingQuestionuuid('');
         }
