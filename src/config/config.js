@@ -8,8 +8,11 @@
 //    SERVER_URL:"http://localhost:5000"
 // }
 
-const config = {
-    SERVER_URL: "https://cairns-brown-snake-xtzt.1.sg-1.fl0.io"
+// const config = {
+//     SERVER_URL: "https://cairns-brown-snake-xtzt.1.sg-1.fl0.io"
+// }
+const config={
+    SERVER_URL:"https://chatbotqabackend-production.up.railway.app"
 }
 config.CATEGORY_MAP = {
     
