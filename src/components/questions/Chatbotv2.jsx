@@ -28,7 +28,7 @@ const Chatbotv2 = () => {
         navigate('/login');
     }
 
-    const handleAnswering = useCallback((textInput)=>{
+    const handleAnswering = (textInput)=>{
         
             console.log('handleAnswering', textInput);
             setIsAnswerFetching(true);
@@ -42,7 +42,7 @@ const Chatbotv2 = () => {
             answerQuestion(textInput, uuid);
     
         
-    },[])
+    }
 
     const answerQuestion = async (text, uuid) => {
         try {
@@ -65,7 +65,7 @@ const Chatbotv2 = () => {
             if (response.success === 0) {
                 setIsAnswerFetching(false);
                 setLoadingQuestionuuid('');
-                setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later, ig?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
+                setAnswers([...answers, { uuid: uuid, answer: 'Sorry, I cant answer your question. Try again later?', answer_uuid: uuidv4(), answer_timestamp: Date.now() }]);
             }
 
             // This data is a ReadableStream
@@ -112,12 +112,7 @@ const Chatbotv2 = () => {
                     }}/>
                     <TooltipWrapper Component={PenSquare} text='New Chat' classnames='w-4 h-4 text-white cursor-pointer' onClick={
                         ()=>{
-                            
-                            setQuestions([]);
-                            setAnswers([]);
-                            setTextInput('');
-                            setIsAnswerFetching(false);
-                            setRerender(0);
+                            window.location.reload();
                         }
                     
                     }/>
